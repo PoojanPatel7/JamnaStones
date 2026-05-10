@@ -24,7 +24,7 @@
             --bg-secondary: #f8f9fa;
             --text-main: #1a1c20;
             --text-muted: #6c757d;
-            --accent-gold: #C5A059; /* Kept for luxury accents */
+            --accent-gold: #C5A059;
             --accent-dark: #2c3e50;
             --border-light: rgba(0, 0, 0, 0.08);
             --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.05);
@@ -59,17 +59,20 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-light);
+            background: transparent;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            border-bottom: 1px solid transparent;
             z-index: 1000;
-            transition: padding 0.4s ease, background 0.4s ease;
+            transition: padding 0.4s ease, background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease, border-bottom 0.4s ease;
         }
 
         header.scrolled {
             padding: 15px 5%;
             background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-light);
             box-shadow: var(--shadow-soft);
         }
 
@@ -105,14 +108,28 @@
             color: var(--accent-gold);
         }
 
-        /* Hero Section with Video Background */
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            z-index: 1001;
+        }
+
+        .menu-toggle .bar {
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-main);
+            transition: 0.3s;
+        }
+
+        /* Hero Section with Split Layout & Video */
         .hero {
             position: relative;
             height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
-            text-align: center;
             overflow: hidden;
         }
 
@@ -127,7 +144,7 @@
             transform: translateX(-50%) translateY(-50%);
             z-index: -2;
             object-fit: cover;
-            opacity: 0.7; /* Adjusted for better visibility */
+            opacity: 1; /* Fully visible on left */
         }
 
         .hero-overlay {
@@ -136,13 +153,17 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0.95));
+            /* Right to left transparent shading */
+            background: linear-gradient(to left, rgba(255,255,255,1) 35%, rgba(255,255,255,0.7) 55%, rgba(255,255,255,0) 100%);
             z-index: -1;
         }
 
         .hero-content {
-            max-width: 900px;
-            padding: 0 5%;
+            max-width: 650px;
+            margin-left: auto; /* Pushes content to the right */
+            margin-right: 5%;
+            padding-right: 2%;
+            text-align: left;
             z-index: 1;
         }
 
@@ -156,7 +177,7 @@
 
         .hero p {
             font-size: 1.2rem;
-            color: var(--text-main); /* Darker for readability over video */
+            color: var(--text-main);
             margin-bottom: 40px;
             font-weight: 400;
         }
@@ -196,7 +217,7 @@
 
         /* General Section Formatting */
         section {
-            padding: 120px 5%;
+            padding: 100px 5%;
         }
 
         .bg-secondary {
@@ -205,7 +226,7 @@
 
         .section-header {
             text-align: center;
-            margin-bottom: 70px;
+            margin-bottom: 60px;
         }
 
         .section-header h2 {
@@ -221,84 +242,173 @@
             font-size: 1.1rem;
         }
 
-        /* --- 3D SCROLLING GRANITE SLAB SHOWCASE --- */
-        .showcase-3d-container {
+        /* --- 3D SLAB STACK SHOWCASE --- */
+        .multi-layer-showcase {
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            perspective: 1500px;
+            perspective: 2500px;
             background: radial-gradient(circle at center, #ffffff 0%, #e9ecef 100%);
             overflow: hidden;
-        }
-
-        .slab-wrapper {
-            width: 65vw;
-            height: 75vh;
-            max-width: 900px;
-            max-height: 1100px;
-            transform-style: preserve-3d;
             position: relative;
         }
 
-        .granite-slab {
+        .showcase-content {
+            width: 100%;
+            max-width: 1400px;
+            height: 100%;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .slab-stack-container {
+            width: 450px;
+            max-width: 80vw;
+            height: 60vh;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-style: preserve-3d;
+        }
+
+        .slab-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            /* Realistic Blue Pearl Granite Texture */
-            background-image: url('https://images.unsplash.com/photo-1588602418580-c081e9b21f00?q=80&w=2000&auto=format&fit=crop'); 
+            border-radius: 6px;
+            box-shadow: -20px 30px 60px rgba(0,0,0,0.4);
+            background-color: #000; /* Solid fallback to prevent transparency */
             background-size: cover;
             background-position: center;
-            border-radius: 4px;
-            box-shadow: var(--shadow-3d);
-            /* Initial 3D state before JS takes over */
-            transform: rotateX(55deg) rotateZ(-25deg) scale(0.7); 
-            border: 8px solid #f8f9fa; /* Simulated polished edge */
-            position: relative;
-            /* Add a subtle shine overlay to mimic polished granite */
+            border: 8px solid #f8f9fa;
+            transform-origin: center center;
             overflow: hidden;
+            will-change: transform, opacity;
         }
 
-        .granite-slab::after {
+        .slab-layer::after {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(to bottom right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(to bottom right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0) 100%);
             transform: rotate(45deg);
             pointer-events: none;
         }
 
-        .slab-text {
+        #slab-1 { background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSupMulNTXntxjShQOVHLNC12gmFgdYnHGzMg&s'); z-index: 4; }
+        #slab-2 { background-image: url('https://images.unsplash.com/photo-1620626011761-996317b8d101?q=80&w=1469&auto=format&fit=crop'); z-index: 3; }
+        #slab-3 { background-image: url('https://mawrbled.com/cdn/shop/files/BluePearlGranite2.jpg?v'); z-index: 2; }
+        #slab-4 { background-image: url('https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=1500&auto=format&fit=crop'); z-index: 1; }
+
+        .info-container {
+            width: 40%;
             position: absolute;
             top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) translateZ(100px); /* Pops out */
-            color: #fff;
-            text-align: center;
-            text-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            right: 5%;
+            transform: translateY(-50%);
+            height: 400px;
+            pointer-events: none;
+        }
+
+        .granite-info {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            opacity: 0;
+            visibility: hidden;
             width: 100%;
-            opacity: 0; /* Faded in by GSAP */
         }
 
-        .slab-text h3 {
-            font-size: 4rem;
-            letter-spacing: 5px;
-            margin-bottom: 10px;
+        .granite-info h3 {
+            font-size: 3.5rem;
+            color: var(--text-main);
+            margin-bottom: 15px;
+            line-height: 1.1;
         }
-        
-        .slab-text p {
-            font-size: 1.5rem;
-            letter-spacing: 2px;
-            font-family: 'Lato', sans-serif;
+
+        .granite-info p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 8px 15px;
+            background: var(--accent-dark);
+            color: #fff;
+            font-size: 0.8rem;
             text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 3px;
+            margin-bottom: 15px;
         }
 
-        /* Grid & Cards (Real Granite Images) */
+        /* --- THE PROCESS 3D SECTION --- */
+        #process {
+            perspective: 2000px;
+            transform-style: preserve-3d;
+            overflow: hidden;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            transform-style: preserve-3d;
+            position: relative;
+        }
+
+        .process-step {
+            background: var(--bg-primary);
+            padding: 40px 30px;
+            border: 1px solid var(--border-light);
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+            transform-style: preserve-3d;
+            border-radius: 8px;
+            z-index: 1;
+        }
+
+        .process-step-num {
+            font-family: 'Cinzel', serif;
+            font-size: 5rem;
+            color: rgba(0,0,0,0.03);
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            line-height: 1;
+            z-index: 0;
+            font-weight: 700;
+        }
+
+        .process-step-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--accent-gold);
+            position: relative;
+            z-index: 1;
+        }
+
+        .process-step h3, .process-step p {
+            position: relative;
+            z-index: 1;
+        }
+
+        .process-step h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
+
+        /* Grid & Cards */
         .grid-3 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 40px;
         }
 
@@ -334,7 +444,7 @@
 
         .product-img {
             width: 100%;
-            height: 280px;
+            height: 250px;
             object-fit: cover;
             margin-bottom: 25px;
             transition: transform 0.8s ease;
@@ -365,7 +475,7 @@
         .split-section {
             display: flex;
             align-items: center;
-            gap: 60px;
+            gap: 50px;
             margin-bottom: 80px;
         }
 
@@ -379,6 +489,7 @@
             border-radius: 4px;
             overflow: hidden;
             box-shadow: var(--shadow-soft);
+            width: 100%;
         }
 
         .split-image img {
@@ -397,27 +508,27 @@
         }
 
         .split-content h3 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             margin-bottom: 20px;
             color: var(--text-main);
         }
 
         .split-content p {
             color: var(--text-muted);
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             margin-bottom: 20px;
         }
 
         ul.feature-list {
             list-style: none;
-            margin-top: 30px;
+            margin-top: 25px;
         }
 
         ul.feature-list li {
             position: relative;
-            padding-left: 30px;
+            padding-left: 25px;
             margin-bottom: 15px;
-            font-size: 1.05rem;
+            font-size: 1rem;
             color: var(--text-main);
         }
 
@@ -426,62 +537,8 @@
             color: var(--accent-dark);
             position: absolute;
             left: 0;
-            top: 2px;
+            top: 3px;
             font-size: 0.7rem;
-        }
-
-        /* Process Steps */
-        .process-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 30px;
-        }
-
-        .process-step {
-            background: var(--bg-primary);
-            padding: 40px 30px;
-            border: 1px solid var(--border-light);
-            text-align: center;
-            position: relative;
-            transition: transform 0.4s ease;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
-        }
-
-        .process-step:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-soft);
-        }
-
-        .process-step-num {
-            font-family: 'Cinzel', serif;
-            font-size: 5rem;
-            color: rgba(0,0,0,0.03);
-            position: absolute;
-            top: -10px;
-            right: 10px;
-            line-height: 1;
-            z-index: 0;
-            font-weight: 700;
-        }
-
-        .process-step-icon {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: var(--accent-gold);
-            position: relative;
-            z-index: 1;
-        }
-
-        .process-step h3, .process-step p {
-            position: relative;
-            z-index: 1;
-        }
-
-        .process-step h3 {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            color: var(--text-main);
         }
 
         /* Why Us Section */
@@ -494,24 +551,24 @@
         .advantage-item {
             display: flex;
             align-items: flex-start;
-            gap: 20px;
+            gap: 15px;
         }
 
         .adv-icon {
             background: var(--accent-dark);
             color: #fff;
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             flex-shrink: 0;
         }
 
         .adv-text h4 {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             margin-bottom: 5px;
             color: var(--text-main);
             font-family: 'Lato', sans-serif;
@@ -522,6 +579,8 @@
         .stats-container {
             display: flex;
             justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 40px;
             background: var(--text-main);
             color: #fff;
             padding: 80px 5%;
@@ -530,18 +589,19 @@
 
         .stat-box {
             text-align: center;
+            min-width: 200px;
         }
 
         .stat-number {
             font-family: 'Cinzel', serif;
-            font-size: 4rem;
+            font-size: 3.5rem;
             color: var(--accent-gold);
             margin-bottom: 10px;
             line-height: 1;
         }
 
         .stat-label {
-            font-size: 1rem;
+            font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
@@ -551,15 +611,16 @@
             max-width: 800px;
             margin: 0 auto;
             background: #fff;
-            padding: 60px;
+            padding: 50px;
             box-shadow: var(--shadow-soft);
             border-top: 5px solid var(--accent-dark);
+            border-radius: 8px;
         }
 
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 25px;
+            gap: 20px;
         }
 
         .form-group.full {
@@ -568,13 +629,14 @@
 
         input, select, textarea {
             width: 100%;
-            padding: 18px;
+            padding: 16px;
             border: 1px solid var(--border-light);
             background: var(--bg-secondary);
             font-family: 'Lato', sans-serif;
             font-size: 1rem;
             color: var(--text-main);
             transition: border-color 0.3s ease, background 0.3s ease;
+            border-radius: 4px;
         }
 
         input:focus, select:focus, textarea:focus {
@@ -587,36 +649,121 @@
         footer {
             background: var(--text-main);
             color: rgba(255,255,255,0.7);
-            padding: 60px 5% 30px;
+            padding: 50px 5% 30px;
             text-align: center;
         }
 
         .footer-logo {
             font-family: 'Cinzel', serif;
-            font-size: 2.2rem;
+            font-size: 2rem;
             color: #fff;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             display: inline-block;
             letter-spacing: 2px;
         }
 
         .footer-logo span { color: var(--accent-gold); }
 
-        /* Responsive */
-        @media (max-width: 992px) {
+        /* =========================================
+           RESPONSIVE DESIGN (Tablets & Mobile)
+           ========================================= */
+        
+        @media (max-width: 1024px) {
             .hero h1 { font-size: 3.5rem; }
-            .split-section, .split-section:nth-child(even) { flex-direction: column; }
-            .split-image { height: 350px; width: 100%; }
-            .stats-container { flex-wrap: wrap; gap: 40px; }
-            .slab-wrapper { width: 90vw; height: 50vh; }
-            .slab-text h3 { font-size: 2.5rem; }
+            .split-section { gap: 30px; }
+            .split-image { height: 400px; }
+            .section-header h2 { font-size: 2.5rem; }
+            
+            /* Responsive 3D Stack for smaller desktops/tablets */
+            .slab-stack-container { width: 40vw; height: 50vh; }
+            .info-container { width: 45%; }
+            .granite-info h3 { font-size: 2.8rem; }
+            .hero-content { margin-right: 2%; padding-left: 5%; }
         }
 
         @media (max-width: 768px) {
-            nav ul { display: none; } /* Simplified for mobile */
-            .hero h1 { font-size: 2.5rem; }
+            section { padding: 70px 5%; }
+            .hero h1 { font-size: 2.8rem; text-align: center; }
+            .hero p { font-size: 1rem; margin-bottom: 30px; text-align: center; }
+            .hero-content { 
+                margin: 0 auto; 
+                padding: 0 5%; 
+                text-align: center;
+                max-width: 100%;
+            }
+            .hero-overlay {
+                /* On mobile, gradient shades from top to bottom so text is readable over video */
+                background: linear-gradient(to top, rgba(255,255,255,1) 15%, rgba(255,255,255,0.85) 55%, rgba(255,255,255,0) 100%);
+            }
+            .hero-content > div { display: flex; flex-direction: column; align-items: center; gap: 15px; }
+            .btn { padding: 14px 30px; font-size: 0.85rem; width: 100%; max-width: 300px; }
+            .btn-outline { margin-left: 0; }
+            
+            /* Mobile Navigation */
+            .menu-toggle { display: flex; }
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(12px);
+                padding: 20px 5%;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                border-top: 1px solid var(--border-light);
+            }
+            nav ul.active { display: flex; }
+            nav ul li { width: 100%; text-align: center; border-bottom: 1px solid var(--border-light); padding: 15px 0; }
+            nav ul li:last-child { border-bottom: none; }
+            
+            /* Mobile 3D Stack Fixes */
+            .multi-layer-showcase { 
+                flex-direction: column; 
+                justify-content: flex-start;
+                padding-top: 80px;
+                height: 100vh;
+            }
+            .slab-stack-container { 
+                width: 75vw; 
+                max-width: 350px;
+                height: 35vh; 
+                position: relative;
+                top: 5vh; 
+                left: 0; 
+                transform: none; 
+                margin: 0 auto;
+            }
+            .info-container { 
+                width: 90%; 
+                position: relative;
+                top: 10vh; 
+                height: auto; 
+                transform: none; 
+                text-align: center; 
+                margin: 0 auto;
+            }
+            .granite-info { 
+                top: 0;
+                left: 0;
+                transform: none !important; /* Override JS transform on mobile */
+            }
+            .granite-info h3 { font-size: 2.2rem; }
+            
+            /* General Layout Fixes */
+            .split-section, .split-section:nth-child(even) { flex-direction: column; }
+            .split-image { height: 300px; width: 100%; margin-bottom: 20px; }
+            .stats-container { flex-direction: column; gap: 40px; padding: 60px 5%; }
+            .stat-box { min-width: 100%; }
             .form-grid { grid-template-columns: 1fr; }
-            section { padding: 80px 5%; }
+            .contact-wrapper { padding: 30px 20px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 2.2rem; }
+            .section-header h2 { font-size: 2rem; }
+            .slab-stack-container { height: 30vh; top: 8vh; }
         }
     </style>
 </head>
@@ -625,8 +772,14 @@
     <!-- Header -->
     <header id="header">
         <a href="#" class="logo">JAMNA<span>STONE</span></a>
+        <!-- Hamburger Menu Icon -->
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
         <nav>
-            <ul>
+            <ul id="nav-list">
                 <li><a href="#process">Our Process</a></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#why-us">Why Us</a></li>
@@ -638,9 +791,9 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <!-- High-End Architecture Video Background showing polished stone/interiors -->
+        <!-- Replaced with requested Getty Images video -->
         <video class="hero-video" autoplay loop muted playsinline>
-            <source src="https://videos.pexels.com/video-files/5551982/5551982-uhd_2560_1440_30fps.mp4" type="video/mp4">
+            <source src="https://media.gettyimages.com/id/605423823/video/rock-of-ages-corporation-area-barre-washington-county-vermont-united-states.mp4?s=mp4-640x640-gi&k=20&c=twXn3OljMlGi3XNhQ6wuBabnOPrEwkwzcApw_BXNFqc=" type="video/mp4">
         </video>
         <div class="hero-overlay"></div>
         
@@ -654,19 +807,42 @@
         </div>
     </section>
 
-    <!-- Interactive 3D Scroll Showcase (Real Granite Texture) -->
-    <section id="3d-experience" class="showcase-3d-container">
-        <div class="slab-wrapper">
-            <div class="granite-slab" id="main-slab">
-                <div class="slab-text">
-                    <h3>BLUE PEARL</h3>
-                    <p>Premium Grade Granite</p>
+    <!-- Interactive 3D Stack Showcase -->
+    <section id="multi-layer-showcase" class="multi-layer-showcase">
+        <div class="showcase-content">
+            <div class="slab-stack-container" id="slab-stack">
+                <div class="slab-layer" id="slab-4"></div> <!-- Bottom Layer: Gold -->
+                <div class="slab-layer" id="slab-3"></div> <!-- 3rd Layer: Blue -->
+                <div class="slab-layer" id="slab-2"></div> <!-- 2nd Layer: White -->
+                <div class="slab-layer" id="slab-1"></div> <!-- Top Layer: Black -->
+            </div>
+            
+            <div class="info-container">
+                <div class="granite-info" id="info-1">
+                    <span class="tag">Commercial Grade</span>
+                    <h3>Absolute Black</h3>
+                    <p>Extremely dense, consistent deep black stone. Processed to a flawless mirror polish. The ultimate choice for striking modern contrasts.</p>
+                </div>
+                <div class="granite-info" id="info-2">
+                    <span class="tag">Exotic Series</span>
+                    <h3>River White</h3>
+                    <p>An elegant white canvas featuring sweeping grey veins and subtle crimson flecks. Brings organic movement to architectural surfaces.</p>
+                </div>
+                <div class="granite-info" id="info-3">
+                    <span class="tag">Luxury Collection</span>
+                    <h3>Blue Pearl</h3>
+                    <p>A mesmerizing Norwegian granite embedded with iridescent blue and silver flecks. Catches the light to create a dynamic aesthetic.</p>
+                </div>
+                <div class="granite-info" id="info-4">
+                    <span class="tag">Heritage Series</span>
+                    <h3>Imperial Gold</h3>
+                    <p>Rich golden hues interwoven with deep brown and quartz veins. A remarkably durable stone that provides warmth and grandeur.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- The Process Section: How we make it -->
+    <!-- The Process Section: Responsive 3D Trigger -->
     <section id="process" class="bg-secondary">
         <div class="section-header">
             <h2>The Transformation Process</h2>
@@ -740,20 +916,20 @@
                         <div class="adv-icon">✓</div>
                         <div class="adv-text">
                             <h4>0.1mm Cutting Tolerance</h4>
-                            <p>Standard yards cut with high margins of error. Our laser-guided bridge saws ensure your slabs and tiles align perfectly, eliminating installation headaches.</p>
+                            <p>Standard yards cut with high margins of error. Our laser-guided bridge saws ensure your slabs and tiles align perfectly.</p>
                         </div>
                     </div>
                     <div class="advantage-item">
                         <div class="adv-icon">✓</div>
                         <div class="adv-text">
                             <h4>Flawless Polishing Technology</h4>
-                            <p>We do not use cheap waxes to hide dull spots. Our high-abrasive polishing process ensures a natural, permanent gloss that lasts for decades.</p>
+                            <p>We do not use cheap waxes to hide dull spots. Our high-abrasive polishing process ensures a natural, permanent gloss.</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="split-image">
-                <img src="https://images.unsplash.com/photo-1574681608779-79a0ebf359c5?q=80&w=1470&auto=format&fit=crop" alt="Premium Granite Quality">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzdn-KCZXH_ronMUYo-PsIzA-J4HC6tDWCYQ&s" alt="Premium Granite Quality">
             </div>
         </div>
     </section>
@@ -762,12 +938,11 @@
     <section id="b2b">
         <div class="section-header">
             <h2>Industrial Scale Fabrication</h2>
-            <p>From quarry extraction to final CNC polishing, Jamna Stone controls the entire supply chain to ensure unmatched quality and consistency for large-scale projects.</p>
+            <p>From quarry extraction to final CNC polishing, Jamna Stone controls the entire supply chain to ensure unmatched quality and consistency.</p>
         </div>
 
         <div class="split-section">
             <div class="split-image">
-                <!-- Image of heavy machinery/CNC cutting stone -->
                 <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=1470&auto=format&fit=crop" alt="Stone Fabrication CNC">
             </div>
             <div class="split-content">
@@ -775,22 +950,21 @@
                 <p>We utilize state-of-the-art multi-axis CNC bridge saws and waterjet technology to achieve exacting tolerances for complex architectural elements.</p>
                 <ul class="feature-list">
                     <li><strong>Custom Profiles:</strong> Precise edge detailing including ogee, bullnose, and complex waterfall joints.</li>
-                    <li><strong>High-Yield Cutting:</strong> AI-assisted digital templating minimizes material waste, saving costs on large commercial orders.</li>
-                    <li><strong>Surface Finishes:</strong> In-house capabilities for polished, honed, leathered, and flamed textures on any granite block.</li>
+                    <li><strong>High-Yield Cutting:</strong> AI-assisted digital templating minimizes material waste, saving costs.</li>
+                    <li><strong>Surface Finishes:</strong> In-house capabilities for polished, honed, leathered, and flamed textures.</li>
                 </ul>
             </div>
         </div>
 
         <div class="split-section">
             <div class="split-image">
-                <!-- Image of shipping/logistics/containers -->
                 <img src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?q=80&w=1470&auto=format&fit=crop" alt="Global Shipping Logistics Container">
             </div>
             <div class="split-content">
                 <h3>Global Export Logistics</h3>
                 <p>Jamna Stone is an established exporter, reliably shipping high-tonnage containers of raw blocks and finished slabs to markets worldwide.</p>
                 <ul class="feature-list">
-                    <li><strong>Secure Crating:</strong> Fumigated, heavy-duty ISPM-15 compliant wooden bundles ensure zero breakage during ocean freight.</li>
+                    <li><strong>Secure Crating:</strong> Fumigated, heavy-duty ISPM-15 compliant wooden bundles ensure zero breakage.</li>
                     <li><strong>Optimized Loading:</strong> Specialized A-frame container loading techniques maximize volume per shipment.</li>
                     <li><strong>Streamlined Customs:</strong> Dedicated export documentation team handling Bill of Lading and port clearances.</li>
                 </ul>
@@ -807,27 +981,24 @@
         <div class="grid-3">
             <div class="product-card">
                 <div class="img-container">
-                    <!-- Real Absolute Black Granite -->
-                    <img src="https://images.unsplash.com/photo-1596122736173-10e0539c3e98?q=80&w=1500&auto=format&fit=crop" class="product-img" alt="Absolute Black Granite">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSupMulNTXntxjShQOVHLNC12gmFgdYnHGzMg&s" class="product-img" alt="Absolute Black Granite">
                 </div>
                 <h3>Absolute Black Granite</h3>
-                <p>Extremely dense, consistent deep black stone. Processed to a flawless mirror polish. Ideal for high-traffic commercial flooring and countertops.</p>
+                <p>Extremely dense, consistent deep black stone. Processed to a flawless mirror polish. Ideal for high-traffic commercial flooring.</p>
             </div>
             <div class="product-card">
                 <div class="img-container">
-                    <!-- Real River White / Viscon White Granite style -->
                     <img src="https://images.unsplash.com/photo-1620626011761-996317b8d101?q=80&w=1469&auto=format&fit=crop" class="product-img" alt="River White Granite">
                 </div>
                 <h3>River White Granite</h3>
-                <p>A durable, elegant white granite featuring subtle grey veining and deep crimson flecks. A highly sought-after material for modern kitchens.</p>
+                <p>A durable, elegant white granite featuring subtle grey veining and deep crimson flecks. Highly sought-after for modern spaces.</p>
             </div>
             <div class="product-card">
                 <div class="img-container">
-                    <!-- Real Marble Texture -->
-                    <img src="https://images.unsplash.com/photo-1615875691163-9f8d9b1585f6?q=80&w=1000&auto=format&fit=crop" class="product-img" alt="Statuario Marble">
+                    <img src="https://www.globalstonesindia.com/wp-content/uploads/2024/04/2-17.jpg" class="product-img" alt="Statuario Marble">
                 </div>
                 <h3>Statuario White Marble</h3>
-                <p>A classic, luxurious white marble with bold, distinctive grey veining. We offer precision vein-matching for stunning continuous installations.</p>
+                <p>A classic, luxurious white marble with bold, distinctive grey veining. We offer precision vein-matching for continuous installations.</p>
             </div>
         </div>
     </section>
@@ -892,7 +1063,22 @@
 
     <!-- Animations & Interactions Logic -->
     <script>
-        // Header background transition on scroll
+        // --- Mobile Menu Toggle ---
+        const menuToggle = document.getElementById('mobile-menu');
+        const navList = document.getElementById('nav-list');
+        
+        menuToggle.addEventListener('click', () => {
+            navList.classList.toggle('active');
+        });
+
+        // Close menu when a link is clicked
+        document.querySelectorAll('#nav-list a').forEach(link => {
+            link.addEventListener('click', () => {
+                navList.classList.remove('active');
+            });
+        });
+
+        // --- Header Background Transition ---
         const header = document.getElementById('header');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
@@ -905,38 +1091,136 @@
         // Initialize GSAP ScrollTrigger
         gsap.registerPlugin(ScrollTrigger);
 
-        // 3D Granite Slab Animation
-        // Pins the container and smoothly rotates/scales the realistic slab as the user scrolls
-        let tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: ".showcase-3d-container",
-                start: "top top", // Starts when top of container hits top of viewport
-                end: "+=1500",    // Total scroll duration for the effect
-                scrub: 1,         // Smooth scrubbing effect tied to scrollbar
-                pin: true         // Pins the section in place while animating
-            }
+        // --- 1. MULTI-LAYER 3D STACK ANIMATION ---
+        let mm = gsap.matchMedia();
+
+        // Initialize elements to be controlled cleanly by autoAlpha
+        gsap.set(["#info-1", "#info-2", "#info-3", "#info-4"], { autoAlpha: 0 });
+
+        // 3D Setup
+        gsap.set("#slab-1", { transform: "translateZ(0px) translateY(0px) rotateX(55deg) rotateZ(-30deg) scale(0.85)" });
+        gsap.set("#slab-2", { transform: "translateZ(-60px) translateY(30px) rotateX(55deg) rotateZ(-30deg) scale(0.85)" });
+        gsap.set("#slab-3", { transform: "translateZ(-120px) translateY(60px) rotateX(55deg) rotateZ(-30deg) scale(0.85)" });
+        gsap.set("#slab-4", { transform: "translateZ(-180px) translateY(90px) rotateX(55deg) rotateZ(-30deg) scale(0.85)" });
+
+        // Apply Stack Animation for Desktop & Tablet
+        mm.add("(min-width: 769px)", () => {
+            gsap.set("#slab-stack", { xPercent: -50, yPercent: -50, top: "50%", left: "50%", transformOrigin: "center center" });
+            const stackMoveX = window.innerWidth > 992 ? "-20vw" : "-10vw";
+            const stackMoveY = "-5vh";
+
+            let stackTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#multi-layer-showcase",
+                    start: "top top", 
+                    end: "+=4000",
+                    scrub: 1,      
+                    pin: true      
+                }
+            });
+
+            // Step 1: Shift stack, stand up Slab 1 (Black), Show Info 1
+            stackTl.to("#slab-stack", { x: stackMoveX, y: stackMoveY, duration: 1, ease: "power1.inOut" }, "start")
+              .to("#slab-1", { rotateX: 0, rotateZ: 0, scale: 1, translateZ: 100, translateY: 0, duration: 1, ease: "power1.inOut" }, "start")
+              .to("#info-1", { autoAlpha: 1, y: 0, duration: 0.5 }, "start+=0.5")
+              .to({}, {duration: 0.5}); // Pause
+
+            // Step 2: Hide Info 1, Fly Slab 1, Stand Slab 2, Show Info 2
+            stackTl.to("#info-1", { autoAlpha: 0, duration: 0.5 }, "step2")
+              .to("#slab-1", { yPercent: -150, opacity: 0, rotateX: 15, duration: 1, ease: "power1.inOut" }, "step2")
+              .to("#slab-2", { rotateX: 0, rotateZ: 0, scale: 1, translateZ: 100, translateY: 0, duration: 1, ease: "power1.inOut" }, "step2")
+              .to("#info-2", { autoAlpha: 1, y: 0, duration: 0.5 }, "step2+=0.5")
+              .to({}, {duration: 0.5}); // Pause
+
+            // Step 3: Hide Info 2, Fly Slab 2, Stand Slab 3, Show Info 3
+            stackTl.to("#info-2", { autoAlpha: 0, duration: 0.5 }, "step3")
+              .to("#slab-2", { yPercent: -150, opacity: 0, rotateX: 15, duration: 1, ease: "power1.inOut" }, "step3")
+              .to("#slab-3", { rotateX: 0, rotateZ: 0, scale: 1, translateZ: 100, translateY: 0, duration: 1, ease: "power1.inOut" }, "step3")
+              .to("#info-3", { autoAlpha: 1, y: 0, duration: 0.5 }, "step3+=0.5")
+              .to({}, {duration: 0.5}); // Pause
+
+            // Step 4: Hide Info 3, Fly Slab 3, Stand Slab 4, Show Info 4
+            stackTl.to("#info-3", { autoAlpha: 0, duration: 0.5 }, "step4")
+              .to("#slab-3", { yPercent: -150, opacity: 0, rotateX: 15, duration: 1, ease: "power1.inOut" }, "step4")
+              .to("#slab-4", { rotateX: 0, rotateZ: 0, scale: 1, translateZ: 100, translateY: 0, duration: 1, ease: "power1.inOut" }, "step4")
+              .to("#info-4", { autoAlpha: 1, y: 0, duration: 0.5 }, "step4+=0.5")
+              .to({}, {duration: 1}); // Final Pause
         });
 
-        tl.to(".granite-slab", {
-            rotateX: 0,
-            rotateZ: 0,
-            scale: 1.05,
-            boxShadow: "0 40px 80px rgba(0,0,0,0.4)",
-            duration: 1,
-            ease: "power2.inOut"
-        })
-        .to(".slab-text", {
-            opacity: 1,
-            transform: "translate(-50%, -50%) translateZ(120px)", // Pushes text further out in 3D space
-            duration: 0.5
-        }, "-=0.4"); // Starts fading in text slightly before rotation finishes
+        // Apply Stack Animation for Mobile
+        mm.add("(max-width: 768px)", () => {
+            let stackTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#multi-layer-showcase",
+                    start: "top top", 
+                    end: "+=3000",
+                    scrub: 1,      
+                    pin: true      
+                }
+            });
 
-        // Simple reveal animations for text sections and cards
-        gsap.utils.toArray('.section-header, .product-card, .split-content, .process-step, .advantage-item').forEach(element => {
+            // Step 1: Stand up Slab 1 (Black) in place, Show Info 1
+            stackTl.to("#slab-1", { rotateX: 0, rotateZ: 0, scale: 1, translateZ: 50, duration: 1, ease: "power1.inOut" }, "start")
+              .to("#info-1", { autoAlpha: 1, duration: 0.5 }, "start+=0.5")
+              .to({}, {duration: 0.5});
+
+            // Step 2: Fly Slab 1, Stand Slab 2, Show Info 2
+            stackTl.to("#info-1", { autoAlpha: 0, duration: 0.5 }, "step2")
+              .to("#slab-1", { xPercent: 150, opacity: 0, rotateY: 15, duration: 1, ease: "power1.inOut" }, "step2")
+              .to("#slab-2", { rotateX: 0, rotateZ: 0, scale: 1, translateZ: 50, duration: 1, ease: "power1.inOut" }, "step2")
+              .to("#info-2", { autoAlpha: 1, duration: 0.5 }, "step2+=0.5")
+              .to({}, {duration: 0.5});
+
+            // Step 3: Fly Slab 2, Stand Slab 3, Show Info 3
+            stackTl.to("#info-2", { autoAlpha: 0, duration: 0.5 }, "step3")
+              .to("#slab-2", { xPercent: 150, opacity: 0, rotateY: 15, duration: 1, ease: "power1.inOut" }, "step3")
+              .to("#slab-3", { rotateX: 0, rotateZ: 0, scale: 1, translateZ: 50, duration: 1, ease: "power1.inOut" }, "step3")
+              .to("#info-3", { autoAlpha: 1, duration: 0.5 }, "step3+=0.5")
+              .to({}, {duration: 0.5});
+
+            // Step 4: Fly Slab 3, Stand Slab 4, Show Info 4
+            stackTl.to("#info-3", { autoAlpha: 0, duration: 0.5 }, "step4")
+              .to("#slab-3", { xPercent: 150, opacity: 0, rotateY: 15, duration: 1, ease: "power1.inOut" }, "step4")
+              .to("#slab-4", { rotateX: 0, rotateZ: 0, scale: 1, translateZ: 50, duration: 1, ease: "power1.inOut" }, "step4")
+              .to("#info-4", { autoAlpha: 1, duration: 0.5 }, "step4+=0.5")
+              .to({}, {duration: 1}); 
+        });
+
+
+        // --- 2. THE PROCESS 3D REVEAL (ONE-WAY ONLY) ---
+        gsap.fromTo(".process-step", 
+            { 
+                opacity: 0, 
+                y: 100, 
+                z: -300, 
+                rotateX: 30, 
+                scale: 0.8 
+            },
+            { 
+                scrollTrigger: {
+                    trigger: "#process",
+                    start: "top 75%",
+                    once: true 
+                },
+                opacity: 1, 
+                y: 0, 
+                z: 0, 
+                rotateX: 0, 
+                scale: 1, 
+                stagger: 0.2, 
+                duration: 1.2, 
+                ease: "back.out(1.4)",
+                clearProps: "all" 
+            }
+        );
+
+        // --- 3. GENERAL REVEAL ANIMATIONS FOR OTHER ELEMENTS ---
+        gsap.utils.toArray('section:not(#process) .section-header, .product-card, .split-content, .advantage-item').forEach(element => {
             gsap.from(element, {
                 scrollTrigger: {
                     trigger: element,
-                    start: "top 85%", // Reveal when element is 85% down the viewport
+                    start: "top 85%", 
+                    once: true 
                 },
                 y: 40,
                 opacity: 0,
