@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jamna Stone | Premium Granite & Marble</title>
+    
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- GSAP for 3D Scroll Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        /* Light Theme Luxury Variables */
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-main: #1a1c20;
+            --text-muted: #6c757d;
+            --accent-gold: #C5A059; /* Kept for luxury accents */
+            --accent-dark: #2c3e50;
+            --border-light: rgba(0, 0, 0, 0.08);
+            --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.05);
+            --shadow-3d: 0 30px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+        }
+
+        /* Glassmorphism Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 25px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-light);
+            z-index: 1000;
+            transition: padding 0.4s ease, background 0.4s ease;
+        }
+
+        header.scrolled {
+            padding: 15px 5%;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            color: var(--text-main);
+            text-decoration: none;
+            letter-spacing: 3px;
+        }
+
+        .logo span {
+            color: var(--accent-dark);
+            font-weight: 700;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent-gold);
+        }
+
+        /* Hero Section with Video Background */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translateX(-50%) translateY(-50%);
+            z-index: -2;
+            object-fit: cover;
+            opacity: 0.7; /* Adjusted for better visibility */
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0.95));
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            padding: 0 5%;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            line-height: 1.1;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-main); /* Darker for readability over video */
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 45px;
+            background: var(--text-main);
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.4s ease;
+            border: 1px solid var(--text-main);
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--accent-gold);
+            border-color: var(--accent-gold);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(197, 160, 89, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--text-main);
+            margin-left: 15px;
+        }
+
+        .btn-outline:hover {
+            background: var(--text-main);
+            color: #fff;
+        }
+
+        /* General Section Formatting */
+        section {
+            padding: 120px 5%;
+        }
+
+        .bg-secondary {
+            background-color: var(--bg-secondary);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        /* --- 3D SCROLLING GRANITE SLAB SHOWCASE --- */
+        .showcase-3d-container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1500px;
+            background: radial-gradient(circle at center, #ffffff 0%, #e9ecef 100%);
+            overflow: hidden;
+        }
+
+        .slab-wrapper {
+            width: 65vw;
+            height: 75vh;
+            max-width: 900px;
+            max-height: 1100px;
+            transform-style: preserve-3d;
+            position: relative;
+        }
+
+        .granite-slab {
+            width: 100%;
+            height: 100%;
+            /* Realistic Blue Pearl Granite Texture */
+            background-image: url('https://images.unsplash.com/photo-1588602418580-c081e9b21f00?q=80&w=2000&auto=format&fit=crop'); 
+            background-size: cover;
+            background-position: center;
+            border-radius: 4px;
+            box-shadow: var(--shadow-3d);
+            /* Initial 3D state before JS takes over */
+            transform: rotateX(55deg) rotateZ(-25deg) scale(0.7); 
+            border: 8px solid #f8f9fa; /* Simulated polished edge */
+            position: relative;
+            /* Add a subtle shine overlay to mimic polished granite */
+            overflow: hidden;
+        }
+
+        .granite-slab::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(to bottom right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(45deg);
+            pointer-events: none;
+        }
+
+        .slab-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) translateZ(100px); /* Pops out */
+            color: #fff;
+            text-align: center;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            width: 100%;
+            opacity: 0; /* Faded in by GSAP */
+        }
+
+        .slab-text h3 {
+            font-size: 4rem;
+            letter-spacing: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .slab-text p {
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            font-family: 'Lato', sans-serif;
+            text-transform: uppercase;
+        }
+
+        /* Grid & Cards (Real Granite Images) */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .product-card {
+            background: #fff;
+            border: 1px solid var(--border-light);
+            padding: 30px;
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: var(--accent-dark);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .product-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            margin-bottom: 25px;
+            transition: transform 0.8s ease;
+        }
+
+        .img-container {
+            overflow: hidden;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .product-card:hover .product-img {
+            transform: scale(1.08);
+        }
+
+        .product-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
+
+        .product-card p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Split Info Section */
+        .split-section {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            margin-bottom: 80px;
+        }
+
+        .split-section:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .split-image {
+            flex: 1;
+            height: 450px;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .split-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .split-section:hover .split-image img {
+            transform: scale(1.05);
+        }
+
+        .split-content {
+            flex: 1;
+        }
+
+        .split-content h3 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .split-content p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        ul.feature-list {
+            list-style: none;
+            margin-top: 30px;
+        }
+
+        ul.feature-list li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+            color: var(--text-main);
+        }
+
+        ul.feature-list li::before {
+            content: '■';
+            color: var(--accent-dark);
+            position: absolute;
+            left: 0;
+            top: 2px;
+            font-size: 0.7rem;
+        }
+
+        /* Stats Section */
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            background: var(--text-main);
+            color: #fff;
+            padding: 80px 5%;
+            margin-top: 50px;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Clean Contact Form */
+        .contact-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 60px;
+            box-shadow: var(--shadow-soft);
+            border-top: 5px solid var(--accent-dark);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 18px;
+            border: 1px solid var(--border-light);
+            background: var(--bg-secondary);
+            font-family: 'Lato', sans-serif;
+            font-size: 1rem;
+            color: var(--text-main);
+            transition: border-color 0.3s ease, background 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent-dark);
+            background: #fff;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-main);
+            color: rgba(255,255,255,0.7);
+            padding: 60px 5% 30px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            color: #fff;
+            margin-bottom: 20px;
+            display: inline-block;
+            letter-spacing: 2px;
+        }
+
+        .footer-logo span { color: var(--accent-gold); }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero h1 { font-size: 3.5rem; }
+            .split-section, .split-section:nth-child(even) { flex-direction: column; }
+            .split-image { height: 350px; width: 100%; }
+            .stats-container { flex-wrap: wrap; gap: 40px; }
+            .slab-wrapper { width: 90vw; height: 50vh; }
+            .slab-text h3 { font-size: 2.5rem; }
+        }
+
+        @media (max-width: 768px) {
+            nav ul { display: none; } /* Simplified for mobile */
+            .hero h1 { font-size: 2.5rem; }
+            .form-grid { grid-template-columns: 1fr; }
+            section { padding: 80px 5%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header id="header">
+        <a href="#" class="logo">JAMNA<span>STONE</span></a>
+        <nav>
+            <ul>
+                <li><a href="#3d-experience">Virtual Slab</a></li>
+                <li><a href="#collections">Granite & Marble</a></li>
+                <li><a href="#b2b">Export & Fabrication</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <!-- High-End Architecture Video Background showing polished stone/interiors -->
+        <video class="hero-video" autoplay loop muted playsinline>
+            <source src="https://videos.pexels.com/video-files/5551982/5551982-uhd_2560_1440_30fps.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-content">
+            <h1>Solid Foundations. <br>Exquisite Finish.</h1>
+            <p>Jamna Stone is a leading processor and exporter of premium Indian Granite and Marble. We deliver industrial-scale precision for global architectural projects.</p>
+            <div>
+                <a href="#collections" class="btn">View Materials</a>
+                <a href="#contact" class="btn btn-outline">Request Quote</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive 3D Scroll Showcase (Real Granite Texture) -->
+    <section id="3d-experience" class="showcase-3d-container">
+        <div class="slab-wrapper">
+            <div class="granite-slab" id="main-slab">
+                <div class="slab-text">
+                    <h3>BLUE PEARL</h3>
+                    <p>Premium Grade Granite</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- B2B Split Sections (Real Industry Images) -->
+    <section id="b2b" class="bg-secondary">
+        <div class="section-header">
+            <h2>Industrial Scale Fabrication</h2>
+            <p>From quarry extraction to final CNC polishing, Jamna Stone controls the entire supply chain to ensure unmatched quality and consistency for large-scale projects.</p>
+        </div>
+
+        <div class="split-section">
+            <div class="split-image">
+                <!-- Image of heavy machinery/CNC cutting stone -->
+                <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=1470&auto=format&fit=crop" alt="Stone Fabrication CNC">
+            </div>
+            <div class="split-content">
+                <h3>Advanced CNC Processing</h3>
+                <p>We utilize state-of-the-art multi-axis CNC bridge saws and waterjet technology to achieve exacting tolerances for complex architectural elements.</p>
+                <ul class="feature-list">
+                    <li><strong>Custom Profiles:</strong> Precise edge detailing including ogee, bullnose, and complex waterfall joints.</li>
+                    <li><strong>High-Yield Cutting:</strong> AI-assisted digital templating minimizes material waste, saving costs on large commercial orders.</li>
+                    <li><strong>Surface Finishes:</strong> In-house capabilities for polished, honed, leathered, and flamed textures on any granite block.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="split-section">
+            <div class="split-image">
+                <!-- Image of shipping/logistics/containers -->
+                <img src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?q=80&w=1470&auto=format&fit=crop" alt="Global Shipping Logistics Container">
+            </div>
+            <div class="split-content">
+                <h3>Global Export Logistics</h3>
+                <p>Jamna Stone is an established exporter, reliably shipping high-tonnage containers of raw blocks and finished slabs to markets worldwide.</p>
+                <ul class="feature-list">
+                    <li><strong>Secure Crating:</strong> Fumigated, heavy-duty ISPM-15 compliant wooden bundles ensure zero breakage during ocean freight.</li>
+                    <li><strong>Optimized Loading:</strong> Specialized A-frame container loading techniques maximize volume per shipment.</li>
+                    <li><strong>Streamlined Customs:</strong> Dedicated export documentation team handling Bill of Lading and port clearances.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Elite Collections (Real Granite/Marble Images) -->
+    <section id="collections">
+        <div class="section-header">
+            <h2>Premium Materials Inventory</h2>
+            <p>Sourcing the most durable and visually striking stones directly from the finest quarries across India and globally.</p>
+        </div>
+        <div class="grid-3">
+            <div class="product-card">
+                <div class="img-container">
+                    <!-- Real Absolute Black Granite -->
+                    <img src="https://images.unsplash.com/photo-1596122736173-10e0539c3e98?q=80&w=1500&auto=format&fit=crop" class="product-img" alt="Absolute Black Granite">
+                </div>
+                <h3>Absolute Black Granite</h3>
+                <p>Extremely dense, consistent deep black stone. Processed to a flawless mirror polish. Ideal for high-traffic commercial flooring and countertops.</p>
+            </div>
+            <div class="product-card">
+                <div class="img-container">
+                    <!-- Real River White / Viscon White Granite style -->
+                    <img src="https://images.unsplash.com/photo-1620626011761-996317b8d101?q=80&w=1469&auto=format&fit=crop" class="product-img" alt="River White Granite">
+                </div>
+                <h3>River White Granite</h3>
+                <p>A durable, elegant white granite featuring subtle grey veining and deep crimson flecks. A highly sought-after material for modern kitchens.</p>
+            </div>
+            <div class="product-card">
+                <div class="img-container">
+                    <!-- Real Marble Texture -->
+                    <img src="https://images.unsplash.com/photo-1615875691163-9f8d9b1585f6?q=80&w=1000&auto=format&fit=crop" class="product-img" alt="Statuario Marble">
+                </div>
+                <h3>Statuario White Marble</h3>
+                <p>A classic, luxurious white marble with bold, distinctive grey veining. We offer precision vein-matching for stunning continuous installations.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Banner -->
+    <div class="stats-container">
+        <div class="stat-box">
+            <div class="stat-number">20+</div>
+            <div class="stat-label">Years of Heritage</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">50+</div>
+            <div class="stat-label">Granite Varieties</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Export Quality Assurance</div>
+        </div>
+    </div>
+
+    <!-- Contact Lead Gen -->
+    <section id="contact" class="bg-secondary">
+        <div class="section-header">
+            <h2>Request a Quote</h2>
+            <p>Contact the Jamna Stone sales team for container pricing, custom cut-to-size orders, or architectural collaborations.</p>
+        </div>
+        <div class="contact-wrapper">
+            <form onsubmit="event.preventDefault(); alert('Inquiry securely transmitted. The Jamna Stone sales team will contact you shortly.');">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <input type="text" placeholder="Full Name / Contact Person" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Company Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <select required>
+                            <option value="" disabled selected>Nature of Inquiry...</option>
+                            <option value="export">Full Container Export (FCL)</option>
+                            <option value="domestic">Domestic Wholesale Supply</option>
+                            <option value="custom">Custom Fabrication / Cut-to-size</option>
+                        </select>
+                    </div>
+                    <div class="form-group full">
+                        <textarea rows="5" placeholder="Please specify stone type, thickness (e.g., 20mm/30mm), finish, and approximate quantity required..." required></textarea>
+                    </div>
+                    <div class="form-group full">
+                        <button type="submit" class="btn" style="width: 100%;">Submit Inquiry to Jamna Stone</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">JAMNA<span>STONE</span></div>
+        <p>&copy; 2026 Jamna Stone. Premium Granite & Marble Exporters.</p>
+    </footer>
+
+    <!-- Animations & Interactions Logic -->
+    <script>
+        // Header background transition on scroll
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Initialize GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 3D Granite Slab Animation
+        // Pins the container and smoothly rotates/scales the realistic slab as the user scrolls
+        let tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".showcase-3d-container",
+                start: "top top", // Starts when top of container hits top of viewport
+                end: "+=1500",    // Total scroll duration for the effect
+                scrub: 1,         // Smooth scrubbing effect tied to scrollbar
+                pin: true         // Pins the section in place while animating
+            }
+        });
+
+        tl.to(".granite-slab", {
+            rotateX: 0,
+            rotateZ: 0,
+            scale: 1.05,
+            boxShadow: "0 40px 80px rgba(0,0,0,0.4)",
+            duration: 1,
+            ease: "power2.inOut"
+        })
+        .to(".slab-text", {
+            opacity: 1,
+            transform: "translate(-50%, -50%) translateZ(120px)", // Pushes text further out in 3D space
+            duration: 0.5
+        }, "-=0.4"); // Starts fading in text slightly before rotation finishes
+
+        // Simple reveal animations for text sections and cards
+        gsap.utils.toArray('.section-header, .product-card, .split-content').forEach(element => {
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 85%", // Reveal when element is 85% down the viewport
+                },
+                y: 40,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power3.out"
+            });
+        });
+    </script>
+</body>
+</html>
