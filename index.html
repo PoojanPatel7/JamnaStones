@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jamna Stone | Premium Granite & Marble</title>
     
+    <!-- Favicon (Tab Icon) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛰️</text></svg>">
+    
     <!-- Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -427,6 +430,94 @@
             font-size: 0.7rem;
         }
 
+        /* Process Steps */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+        }
+
+        .process-step {
+            background: var(--bg-primary);
+            padding: 40px 30px;
+            border: 1px solid var(--border-light);
+            text-align: center;
+            position: relative;
+            transition: transform 0.4s ease;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+        }
+
+        .process-step:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .process-step-num {
+            font-family: 'Cinzel', serif;
+            font-size: 5rem;
+            color: rgba(0,0,0,0.03);
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            line-height: 1;
+            z-index: 0;
+            font-weight: 700;
+        }
+
+        .process-step-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--accent-gold);
+            position: relative;
+            z-index: 1;
+        }
+
+        .process-step h3, .process-step p {
+            position: relative;
+            z-index: 1;
+        }
+
+        .process-step h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
+
+        /* Why Us Section */
+        .advantage-list {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .advantage-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .adv-icon {
+            background: var(--accent-dark);
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .adv-text h4 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: var(--text-main);
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+        }
+
         /* Stats Section */
         .stats-container {
             display: flex;
@@ -536,10 +627,11 @@
         <a href="#" class="logo">JAMNA<span>STONE</span></a>
         <nav>
             <ul>
-                <li><a href="#3d-experience">Virtual Slab</a></li>
-                <li><a href="#collections">Granite & Marble</a></li>
-                <li><a href="#b2b">Export & Fabrication</a></li>
-                <li><a href="#contact">Contact Us</a></li>
+                <li><a href="#process">Our Process</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#why-us">Why Us</a></li>
+                <li><a href="#collections">Materials</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
@@ -548,7 +640,7 @@
     <section class="hero" id="home">
         <!-- High-End Architecture Video Background showing polished stone/interiors -->
         <video class="hero-video" autoplay loop muted playsinline>
-            <source src="https://www.pexels.com/download/video/4474971/" type="video/mp4">
+            <source src="https://videos.pexels.com/video-files/5551982/5551982-uhd_2560_1440_30fps.mp4" type="video/mp4">
         </video>
         <div class="hero-overlay"></div>
         
@@ -574,8 +666,100 @@
         </div>
     </section>
 
+    <!-- The Process Section: How we make it -->
+    <section id="process" class="bg-secondary">
+        <div class="section-header">
+            <h2>The Transformation Process</h2>
+            <p>From massive quarry boulders to flawless architectural surfaces. See how Jamna Stone engineers raw earth into premium granite.</p>
+        </div>
+        <div class="process-grid">
+            <div class="process-step">
+                <div class="process-step-num">01</div>
+                <div class="process-step-icon">⛏️</div>
+                <h3>Quarry Extraction</h3>
+                <p>We source massive, high-density granite blocks directly from elite quarries, ensuring consistent color and structural integrity.</p>
+            </div>
+            <div class="process-step">
+                <div class="process-step-num">02</div>
+                <div class="process-step-icon">⚙️</div>
+                <h3>Multi-Wire Sawing</h3>
+                <p>Blocks are sliced into slabs using state-of-the-art Italian multi-wire saws, ensuring uniform thickness and minimal wastage.</p>
+            </div>
+            <div class="process-step">
+                <div class="process-step-num">03</div>
+                <div class="process-step-icon">✨</div>
+                <h3>Resin & Polishing</h3>
+                <p>Automated epoxy lines fill microscopic fissures, followed by 21-head line polishers that achieve a flawless, mirror-like finish.</p>
+            </div>
+            <div class="process-step">
+                <div class="process-step-num">04</div>
+                <div class="process-step-icon">🔍</div>
+                <h3>Quality Assurance</h3>
+                <p>Every single slab undergoes rigorous laser inspection for hairline cracks, polish consistency, and dimension accuracy before crating.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Services Section -->
+    <section id="services">
+        <div class="section-header">
+            <h2>Our Core Services</h2>
+            <p>Comprehensive stone solutions tailored for international wholesalers, luxury developers, and architectural firms.</p>
+        </div>
+        <div class="grid-3">
+            <div class="product-card">
+                <h3 style="margin-top: 15px;">Wholesale Slab Export</h3>
+                <p>Supplying standard and jumbo size granite slabs in bulk quantities. Expertly crated and shipped globally with zero compromise on quality.</p>
+            </div>
+            <div class="product-card">
+                <h3 style="margin-top: 15px;">Cut-to-Size Projects</h3>
+                <p>Precision cutting for large commercial projects. We supply ready-to-install flooring, wall cladding, and staircases directly to your job site.</p>
+            </div>
+            <div class="product-card">
+                <h3 style="margin-top: 15px;">Architectural CNC</h3>
+                <p>Bespoke edge profiling, waterjet medallion cutting, and 3D stone carving for highly customized, high-ticket luxury installations.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section id="why-us" class="bg-secondary">
+        <div class="split-section" style="margin-bottom: 0;">
+            <div class="split-content">
+                <h2>Why Jamna Stone Outperforms Competition</h2>
+                <p>The stone industry is crowded, but consistency is rare. Here is why top global buyers trust us over standard suppliers.</p>
+                <div class="advantage-list" style="margin-top: 30px;">
+                    <div class="advantage-item">
+                        <div class="adv-icon">✓</div>
+                        <div class="adv-text">
+                            <h4>Direct Quarry Access</h4>
+                            <p>We source directly from mine owners. This eliminates intermediary markups, giving you premium stone at highly competitive export rates.</p>
+                        </div>
+                    </div>
+                    <div class="advantage-item">
+                        <div class="adv-icon">✓</div>
+                        <div class="adv-text">
+                            <h4>0.1mm Cutting Tolerance</h4>
+                            <p>Standard yards cut with high margins of error. Our laser-guided bridge saws ensure your slabs and tiles align perfectly, eliminating installation headaches.</p>
+                        </div>
+                    </div>
+                    <div class="advantage-item">
+                        <div class="adv-icon">✓</div>
+                        <div class="adv-text">
+                            <h4>Flawless Polishing Technology</h4>
+                            <p>We do not use cheap waxes to hide dull spots. Our high-abrasive polishing process ensures a natural, permanent gloss that lasts for decades.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="split-image">
+                <img src="https://images.unsplash.com/photo-1574681608779-79a0ebf359c5?q=80&w=1470&auto=format&fit=crop" alt="Premium Granite Quality">
+            </div>
+        </div>
+    </section>
+
     <!-- B2B Split Sections (Real Industry Images) -->
-    <section id="b2b" class="bg-secondary">
+    <section id="b2b">
         <div class="section-header">
             <h2>Industrial Scale Fabrication</h2>
             <p>From quarry extraction to final CNC polishing, Jamna Stone controls the entire supply chain to ensure unmatched quality and consistency for large-scale projects.</p>
@@ -624,7 +808,7 @@
             <div class="product-card">
                 <div class="img-container">
                     <!-- Real Absolute Black Granite -->
-                    <img src="https://www.google.com/imgres?q=absolute%20black%20granite&imgurl=https%3A%2F%2Fi.pinimg.com%2F564x%2F62%2Fea%2F7f%2F62ea7f5e6af5e21ce800e9fcce43f086.jpg&imgrefurl=https%3A%2F%2Fjp.pinterest.com%2Fpin%2Fabsolute-black-granite-kitchen-island-with-sink--590041988665438031%2F&docid=j0msBMKcN_rXKM&tbnid=xC83PNk4OEYTbM&vet=12ahUKEwjT9-Sqx66UAxXoRmcHHQ5jCdgQnPAOegQIMRAA..i&w=539&h=463&hcb=2&ved=2ahUKEwjT9-Sqx66UAxXoRmcHHQ5jCdgQnPAOegQIMRAA" class="product-img" alt="Absolute Black Granite">
+                    <img src="https://images.unsplash.com/photo-1596122736173-10e0539c3e98?q=80&w=1500&auto=format&fit=crop" class="product-img" alt="Absolute Black Granite">
                 </div>
                 <h3>Absolute Black Granite</h3>
                 <p>Extremely dense, consistent deep black stone. Processed to a flawless mirror polish. Ideal for high-traffic commercial flooring and countertops.</p>
@@ -748,7 +932,7 @@
         }, "-=0.4"); // Starts fading in text slightly before rotation finishes
 
         // Simple reveal animations for text sections and cards
-        gsap.utils.toArray('.section-header, .product-card, .split-content').forEach(element => {
+        gsap.utils.toArray('.section-header, .product-card, .split-content, .process-step, .advantage-item').forEach(element => {
             gsap.from(element, {
                 scrollTrigger: {
                     trigger: element,
